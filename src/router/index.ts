@@ -5,6 +5,7 @@ import VueRouter, { RouteConfig } from 'vue-router';
 const Machines = () => import('@/views/machines/MachinesView.vue');
 const Settings = () => import('@/views/settings/SettingsView.vue');
 const Errors = () => import('@/views/errors/ErrorsView.vue');
+const Images = () => import('@/views/images/ImagesView.vue');
 
 
 Vue.use(VueRouter);
@@ -25,6 +26,12 @@ const routes: Array<RouteConfig> = [
     path: '/:id/errors',
     name: 'errors',
     component: Errors,
+    props: true
+  },
+  {
+    path: '/:id/images',
+    name: 'images',
+    component: Images,
     props: true
   }
 ];

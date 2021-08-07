@@ -21,16 +21,25 @@
                     <v-col cols="12">
                       <v-data-table :loading="loading" :headers="headers" :items="values" hide-default-footer>
                         <template v-slot:item.lastModified="{ value }">
-                          {{ new Date(value).toLocaleString()}}
+                          {{ new Date(value).toLocaleString() }}
                         </template>
                         <template v-slot:item.lastPinged="{ value }">
-                          {{ new Date(value).toLocaleString()}}
+                          {{ new Date(value).toLocaleString() }}
                         </template>
                         <template v-slot:item.settings="{ item }">
-                          <v-icon small color="warning" class="mx-1" style="cursor: pointer" title="Settings" @click="$router.push(`/${item.id}/settings`)"> mdi-cog-outline</v-icon>
+                          <v-icon small color="warning" class="mx-1" style="cursor: pointer" title="Settings" @click="$router.push(`/${item.id}/settings`)">
+                            mdi-cog-outline</v-icon
+                          >
                         </template>
-                         <template v-slot:item.errors="{ item }">
-                          <v-icon small color="error" class="mx-1" style="cursor: pointer" title="Event log" @click="$router.push(`/${item.id}/errors`)"> mdi-math-log</v-icon>
+                        <template v-slot:item.errors="{ item }">
+                          <v-icon small color="error" class="mx-1" style="cursor: pointer" title="Event log" @click="$router.push(`/${item.id}/errors`)">
+                            mdi-math-log</v-icon
+                          >
+                        </template>
+                        <template v-slot:item.images="{ item }">
+                          <v-icon small color="primary" class="mx-1" style="cursor: pointer" title="Images" @click="$router.push(`/${item.id}/images`)">
+                            mdi-image</v-icon
+                          >
                         </template>
                       </v-data-table>
                     </v-col>
@@ -79,6 +88,10 @@ export default class Settings extends Vue {
     {
       text: "Event log",
       value: "errors",
+    },
+    {
+      text: "Images",
+      value: "images",
     },
   ];
 
