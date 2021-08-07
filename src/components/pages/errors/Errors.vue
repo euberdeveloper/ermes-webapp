@@ -12,7 +12,7 @@
             <v-card class="elevation-12" v-show="showCard">
               <!-- TITLE -->
               <v-toolbar color="primary" class="d-flex justify-center" dark flat>
-                <v-toolbar-title>Ermes machines</v-toolbar-title>
+                <v-toolbar-title>Ermes errors</v-toolbar-title>
               </v-toolbar>
               <!-- FORM -->
               <v-card-text>
@@ -20,17 +20,8 @@
                   <v-row align="center" justify="center">
                     <v-col cols="12">
                       <v-data-table :loading="loading" :headers="headers" :items="values" hide-default-footer>
-                        <template v-slot:item.lastModified="{ value }">
-                          {{ new Date(value).toLocaleString()}}
-                        </template>
-                        <template v-slot:item.lastPinged="{ value }">
-                          {{ new Date(value).toLocaleString()}}
-                        </template>
-                        <template v-slot:item.settings="{ item }">
-                          <v-icon small color="warning" class="mx-1" style="cursor: pointer" title="Settings" @click="$router.push(`/${item.id}/settings`)"> mdi-cog-outline</v-icon>
-                        </template>
-                         <template v-slot:item.errors="{ item }">
-                          <v-icon small color="error" class="mx-1" style="cursor: pointer" title="Event log" @click="$router.push(`/${item.id}/errors`)"> mdi-math-log</v-icon>
+                        <template v-slot:item.timestamp="{ value }">
+                          {{ new Date(value).toLocaleString() }}
                         </template>
                       </v-data-table>
                     </v-col>
@@ -46,41 +37,42 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue } from "vue-property-decorator";
 import axios from "axios";
 import CONFIG from "@/config";
 
 @Component
 export default class Settings extends Vue {
+  /* PROPS */
+
+  @Prop({ type: String, required: true })
+  id!: string;
+
   /* DATA */
 
   private showCard = false;
-  private loading = false;
 
-  private values: any[] = [];
+  private loading = false;
 
   private headers = [
     {
-      text: "MAC address",
+      text: "Id",
       value: "id",
     },
     {
-      text: "Last modified",
-      value: "lastModified",
+      text: "Error code",
+      value: "error",
     },
     {
-      text: "Last pinged",
-      value: "lastPinged",
-    },
-    {
-      text: "Settings",
-      value: "settings",
-    },
-    {
-      text: "Event log",
-      value: "errors",
+      text: "Timestamp",
+      value: "timestamp",
     },
   ];
+
+  private values = [];
+
+
+  
 
   /* LIFE CYCLE */
 
@@ -88,7 +80,7 @@ export default class Settings extends Vue {
     this.showCard = true;
     try {
       this.loading = true;
-      const response = await axios.get(`${CONFIG.API_URL}/machines`);
+      const response = await axios.get(`${CONFIG.API_URL}/machines/${this.id}/errors`);
       this.values = response.data;
     } finally {
       this.loading = false;
