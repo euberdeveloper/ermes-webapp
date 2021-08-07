@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
 
 /* PUBLIC */
+const Machines = () => import('@/views/machines/MachinesView.vue');
 const Settings = () => import('@/views/settings/SettingsView.vue');
 
 
@@ -10,8 +11,14 @@ Vue.use(VueRouter);
 const routes: Array<RouteConfig> = [
   {
     path: '/',
+    name: 'machines',
+    component: Machines
+  },
+  {
+    path: '/:id/settings',
     name: 'settings',
-    component: Settings
+    component: Settings,
+    props: true
   }
 ];
 

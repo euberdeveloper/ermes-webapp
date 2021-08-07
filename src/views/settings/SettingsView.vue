@@ -1,9 +1,9 @@
 <template>
-  <settings />
+  <settings :id="id" />
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue } from "vue-property-decorator";
 import Settings from "@/components/pages/settings/Settings.vue";
 
 @Component({
@@ -11,5 +11,10 @@ import Settings from "@/components/pages/settings/Settings.vue";
     Settings,
   },
 })
-export default class SettingsView extends Vue {}
+export default class SettingsView extends Vue {
+  /* PROPS */
+
+  @Prop({ type: String, required: true })
+  id!: string;
+}
 </script>

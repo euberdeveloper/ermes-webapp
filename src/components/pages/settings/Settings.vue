@@ -31,7 +31,6 @@
                         </span>
                       </v-col>
                     </v-row>
-                    <v-divider class="my-8" />
                     <v-row align="center" justify="center">
                       <v-col cols="6">
                         <v-select
@@ -95,7 +94,7 @@ export type ConfigBody = Pick<Config, "paused" | "backup" | "resolution" | "pxFo
 export default class Settings extends Vue {
   /* PROPS */
 
-  @Prop({ type: String, default: "1" })
+  @Prop({ type: String, required: true })
   id!: string;
 
   /* DATA */
@@ -123,7 +122,7 @@ export default class Settings extends Vue {
   /* GETTERS */
 
   get parsedHours() {
-    return this.body.hours.map((el) => ({ value: el }));
+    return this.body.hours ? this.body.hours.map((el) => ({ value: el })) : [];
   }
 
   /* METHODS */
@@ -133,7 +132,7 @@ export default class Settings extends Vue {
       paused: false,
       backup: false,
       resolution: 23,
-      pxFormat: "YYY",
+      pxFormat: "PIXFORMAT_JPEG",
       hours: [],
     };
   }
@@ -142,6 +141,7 @@ export default class Settings extends Vue {
     if (this.formValid && !this.loading) {
       try {
         this.loading = true;
+        console.log(this.body);
         await axios.post(`${CONFIG.API_URL}/machines/${this.id}`, this.body);
         this.resetBody = {...this.body};
       } finally {
