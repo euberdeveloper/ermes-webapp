@@ -20,6 +20,9 @@
                   <v-row align="center" justify="center">
                     <v-col cols="12">
                       <v-data-table :loading="loading" :headers="headers" :items="values" hide-default-footer>
+                        <template v-slot:item.error>
+                          SD not connected
+                        </template>
                         <template v-slot:item.timestamp="{ value }">
                           {{ new Date(value).toLocaleString() }}
                         </template>

@@ -20,6 +20,7 @@
                   <v-container fluid>
                     <v-row align="center" justify="center">
                       <v-col cols="12">
+                        <div class="mb-4">Each day, a foto will be taken in these hours.</div>
                         <v-data-table v-if="parsedHours.length" :headers="headers" :items="parsedHours" hide-default-footer>
                           <template v-slot:item.delete="{ index }">
                             <v-icon small color="red" class="mx-1" title="Delete" @click="body.hours.splice(index, 1)">mdi-delete</v-icon>
@@ -29,6 +30,11 @@
                           <v-text-field type="text" label="Insert hour" name="insertHour" clearable v-model="insertHour" />
                           <v-btn class="ml-5" color="primary" :disabled="!insertHour" @click="doInsert">ADD</v-btn>
                         </span>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col :cols="12">
+                        <v-divider class="my-8" />
                       </v-col>
                     </v-row>
                     <v-row align="center" justify="center">
